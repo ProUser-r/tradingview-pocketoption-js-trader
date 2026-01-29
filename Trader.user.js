@@ -133,7 +133,7 @@
     }
 
     function processPocketOption() {
-        let __SESSION_ID__ = "ENTER_ID";
+        const __SESSION_ID__ = "ENTER_ID";
         GM_addValueChangeListener("new_trade_event", (key, oldVal, newVal, remote) => {
             console.log('CHANGE on', location.host, { key, oldVal, newVal, remote });
 
@@ -160,7 +160,7 @@
                 });
             };
             window.__DO_PO_SOCKET__();
-            exec_order(${JSON.stringify(newVal)});
+            exec_order("${newVal.type}");
             })();`;
             document.documentElement.appendChild(exec_script);
             exec_script.remove();
@@ -191,7 +191,7 @@
             socket.on("connect", () => {
                 console.log("[TRADER] connected", socket.id);
                 socket.emit("auth", {
-                    session: ${__SESSION_ID__},
+                    session: "${__SESSION_ID__}",
                     isDemo: 1,
                     uid: 62124847,
                     platform: 2,
