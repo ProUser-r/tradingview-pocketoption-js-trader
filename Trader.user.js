@@ -4,7 +4,7 @@
 // @version      0.1-dev
 // @description  try to take over the world!
 // @author       You
-// @match        https://ru.tradingview.com/chart/pkIdB1nN/*
+// @match        https://ru.tradingview.com/chart/*
 // @match        https://m.pocketoption.com/ru/cabinet/*
 // @match        https://pocketoption.com/ru/cabinet/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=tradingview.com
@@ -105,14 +105,14 @@
 
     async function processTradingView() {
         function processNewSignal() {
-            var newSignalRow = document.querySelector("#bottom-area > div.bottom-widgetbar-content.backtesting > div > div > div > div > div > div.ka > div > table > tbody > tr:nth-child(2)");
+            var newSignalRow = document.querySelector("#bottom-area > div.bottom-widgetbar-content.backtesting > div > div > div > div > div > div > div.ka > div > table > tbody > tr:nth-child(2)");
             var data = newSignalRow.querySelectorAll('td.ka-cell > div > span');
             var type = data[1].className.startsWith("long") ? "long" : "short";
             console.log(+data[0].innerHTML, type, newSignalRow);
             GM_setValue("new_trade_event", { ts : Date.now(), id : +data[0].innerHTML, type : type });
         }
 
-        var dealsTable = (await waitForPath(() => document.querySelector("#bottom-area > div.bottom-widgetbar-content.backtesting > div > div > div > div > div > div.ka > div > table > tbody > tr:nth-child(2)"))).parentNode;
+        var dealsTable = (await waitForPath(() => document.querySelector("#bottom-area > div.bottom-widgetbar-content.backtesting > div > div > div > div > div > div > div.ka > div > table > tbody > tr:nth-child(2) "))).parentNode;
 
         const tableObserver = new MutationObserver(function(mutationsList, observer) {
             for(const mutation of mutationsList) {
